@@ -61,6 +61,13 @@
   }
   .btn-primary:hover{ background:var(--color-primary-dark); }
   .btn-primary:disabled{ opacity:.55; cursor:default; }
+  .btn-secondary{
+    width:100%; padding:13px; border:1.5px solid var(--color-primary); border-radius:10px;
+    background:#fff; color:var(--color-primary); font-size:15px; font-weight:700; cursor:pointer;
+    margin-top:10px; transition:.15s; font-family:var(--font);
+  }
+  .btn-secondary:hover{ background:#EEF3FA; }
+  .btn-secondary:disabled{ opacity:.55; cursor:default; }
   .error-msg{ color:#D5453B; font-size:13px; margin-top:10px; display:none; }
 
   /* ---------- 개인정보 동의 (전체 양식) ---------- */
@@ -96,13 +103,46 @@
   }
 
   /* ---------- 예약 화면 상단 정보 ---------- */
-  .info-card{ display:flex; align-items:center; gap:14px; position:relative; }
-  .logout-btn{
-    position:absolute; top:14px; right:16px; background:none; border:none; font-size:12px;
-    color:var(--color-muted); cursor:pointer; font-family:var(--font); font-weight:600; padding:4px 6px;
-    border-radius:6px; transition:.12s;
+  .info-card{ display:flex; align-items:center; gap:14px; }
+
+  /* ---------- 탭 바 ---------- */
+  .tab-bar{
+    display:flex; background:var(--color-surface); border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-card); padding:6px; margin-bottom:16px; gap:6px;
   }
-  .logout-btn:hover{ background:#F1F4F9; color:var(--color-ink); }
+  .tab-btn{
+    flex:1; padding:11px; border:none; border-radius:12px; font-size:14px; font-weight:700;
+    font-family:var(--font); cursor:pointer; color:var(--color-muted); background:transparent; transition:.15s;
+  }
+  .tab-btn.active{ background:var(--color-primary); color:#fff; }
+  .tab-btn:not(.active):hover{ background:#F1F4F9; color:var(--color-ink); }
+
+  /* ---------- 내 예약현황 카드 ---------- */
+  .my-resv-card{ text-align:center; }
+  .my-resv-empty{ padding:30px 0; color:var(--color-muted); font-size:13.5px; }
+  .my-resv-empty .icon{ font-size:40px; margin-bottom:12px; }
+  .my-resv-badge{
+    display:inline-flex; align-items:center; gap:6px; background:#ECFDF5; border:1px solid #BBF0D2;
+    color:var(--slot-mine); font-size:12px; font-weight:800; border-radius:20px; padding:5px 12px; margin-bottom:18px;
+  }
+  .my-resv-date{
+    font-size:26px; font-weight:900; color:var(--color-ink); letter-spacing:-.02em; margin-bottom:6px;
+  }
+  .my-resv-time{
+    font-size:18px; font-weight:700; color:var(--color-primary); margin-bottom:24px;
+  }
+  .my-resv-meta{ font-size:12.5px; color:var(--color-muted); margin-bottom:20px; }
+  .btn-cancel-full{
+    width:100%; padding:13px; border:1.5px solid #F3B9B4; border-radius:10px; background:#fff;
+    color:#D5453B; font-size:14px; font-weight:700; cursor:pointer; font-family:var(--font); transition:.12s;
+  }
+  .btn-cancel-full:hover{ background:#FDF2F1; }
+  .btn-logout-full{
+    width:100%; padding:14px; border:none; border-radius:var(--radius-lg); background:#EEF1F6;
+    color:var(--color-muted); font-size:14px; font-weight:700; cursor:pointer; font-family:var(--font);
+    margin-bottom:16px; transition:.12s;
+  }
+  .btn-logout-full:hover{ background:#E0E4ED; color:var(--color-ink); }
   .badge-group{
     width:46px; height:46px; border-radius:50%; background:var(--color-primary); color:#fff;
     display:flex; align-items:center; justify-content:center; font-weight:800; font-size:14px; flex-shrink:0;
@@ -110,23 +150,7 @@
   .info-main{ flex:1; min-width:0; }
   .info-main .name{ font-size:16px; font-weight:800; }
   .info-main .addr{ font-size:13px; color:var(--color-muted); margin-top:2px; }
-  .status-line{ font-size:12.5px; margin-top:8px; padding:9px 11px; border-radius:9px; background:#F1F4F9; color:var(--color-muted); }
-  .status-line.has-resv{
-    display:flex; align-items:center; justify-content:space-between; gap:10px;
-    background:linear-gradient(135deg,#ECFDF5,#F1FBF6); border:1px solid #BBF0D2; padding:11px 12px;
-  }
-  .resv-info{ display:flex; flex-direction:column; gap:3px; min-width:0; }
-  .resv-label{ display:flex; align-items:center; gap:5px; font-size:13px; font-weight:800; color:var(--slot-mine); }
-  .resv-label .check{
-    width:16px; height:16px; border-radius:50%; background:var(--slot-mine); color:#fff;
-    display:inline-flex; align-items:center; justify-content:center; font-size:10px; flex-shrink:0;
-  }
-  .resv-time{ font-size:12px; font-weight:600; color:#0F7A52; }
-  .cancel-btn{
-    flex-shrink:0; background:#fff; border:1.3px solid #F3B9B4; color:#D5453B; font-size:11.5px;
-    font-weight:700; padding:7px 11px; border-radius:8px; cursor:pointer; font-family:var(--font); transition:.12s;
-  }
-  .cancel-btn:hover{ background:#FDF2F1; }
+
 
   /* ---------- 달력 영역 ---------- */
   .cal-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
@@ -254,38 +278,55 @@
       </div>
     </div>
 
-    <button class="btn-primary" id="btnLogin">확인</button>
+    <button class="btn-primary" id="btnLogin">확인 (예약하기)</button>
+    <button class="btn-secondary" id="btnCheckResv">내 예약 확인하기</button>
     <div class="error-msg" id="loginError"></div>
   </div>
 
   <!-- ===== 예약 화면 ===== -->
   <div id="reservationScreen" class="hidden">
 
+    <!-- 상단 사용자 정보 카드 -->
     <div class="card info-card">
-      <button class="logout-btn" id="btnLogout">로그아웃</button>
       <div class="badge-group" id="groupBadge">G1</div>
       <div class="info-main">
         <div class="name" id="residentName"></div>
         <div class="addr" id="residentAddr"></div>
-        <div class="status-line" id="statusLine">예약 정보를 불러오는 중...</div>
       </div>
     </div>
 
-    <div class="card">
-      <div class="cal-head">
-        <h3>입주 예약하기</h3>
-        <select id="monthSelect">
-          <option value="2026-06">2026년 06월</option>
-          <option value="2026-07">2026년 07월</option>
-          <option value="2026-08">2026년 08월</option>
-        </select>
+    <!-- 탭 -->
+    <div class="tab-bar">
+      <button class="tab-btn active" id="tabReserve" onclick="switchTab('reserve')">예약하기</button>
+      <button class="tab-btn" id="tabMyResv" onclick="switchTab('myresv')">내 예약현황</button>
+    </div>
+
+    <!-- 탭1: 예약하기 -->
+    <div id="panelReserve">
+      <div class="card">
+        <div class="cal-head">
+          <h3>입주 예약하기</h3>
+          <select id="monthSelect">
+            <option value="2026-06">2026년 06월</option>
+            <option value="2026-07">2026년 07월</option>
+            <option value="2026-08">2026년 08월</option>
+          </select>
+        </div>
+        <div class="legend">
+          <span><i class="dot av"></i>예약가능</span>
+          <span><i class="dot tk"></i>예약불가</span>
+          <span><i class="dot mn"></i>내 예약</span>
+        </div>
+        <div id="calendarBody"><div class="loading">불러오는 중...</div></div>
       </div>
-      <div class="legend">
-        <span><i class="dot av"></i>예약가능</span>
-        <span><i class="dot tk"></i>예약불가</span>
-        <span><i class="dot mn"></i>내 예약</span>
+    </div>
+
+    <!-- 탭2: 내 예약현황 -->
+    <div id="panelMyResv" class="hidden">
+      <div class="card my-resv-card" id="myResvCard">
+        <div class="loading">불러오는 중...</div>
       </div>
-      <div id="calendarBody"><div class="loading">불러오는 중...</div></div>
+      <button class="btn-logout-full" id="btnLogout">로그아웃</button>
     </div>
 
   </div>
@@ -306,14 +347,12 @@
 
 <script>
 /* ============== 설정 ============== */
-// Apps Script 웹앱 배포 후 발급되는 URL로 교체하세요.
 const GAS_URL = 'https://script.google.com/macros/s/여기에_배포된_웹앱_ID/exec';
 
-const SLOT_LABELS = { AVAILABLE:'예약가능', TAKEN:'예약불가', MINE:'내 예약' };
 let resident = null;
-let pendingSlot = null; // 모달 확인 대기 중인 슬롯
+let pendingSlot = null;
 
-/* ============== API 호출 ============== */
+/* ============== API ============== */
 function apiGet(action, params){
   const qs = new URLSearchParams(Object.assign({action}, params)).toString();
   return fetch(GAS_URL + '?' + qs).then(r => r.json());
@@ -321,64 +360,65 @@ function apiGet(action, params){
 function apiPost(action, payload){
   return fetch(GAS_URL, {
     method:'POST',
-    headers:{ 'Content-Type':'text/plain;charset=utf-8' }, // preflight 회피
+    headers:{ 'Content-Type':'text/plain;charset=utf-8' },
     body: JSON.stringify(Object.assign({action}, payload))
   }).then(r => r.json());
 }
 
-/* ============== 로그인 ============== */
-document.getElementById('btnLogin').addEventListener('click', async () => {
-  const dong = document.getElementById('inDong').value.trim();
-  const ho = document.getElementById('inHo').value.trim();
-  const name = document.getElementById('inName').value.trim();
+/* ============== 로그인 공통 함수 ============== */
+async function doLogin(targetTab){
+  const dong  = document.getElementById('inDong').value.trim();
+  const ho    = document.getElementById('inHo').value.trim();
+  const name  = document.getElementById('inName').value.trim();
   const phone = document.getElementById('inPhone').value.trim();
   const errEl = document.getElementById('loginError');
   errEl.style.display = 'none';
 
   if(!dong || !ho || !name || !phone){
     errEl.textContent = '모든 항목을 입력해 주세요.';
-    errEl.style.display = 'block';
-    return;
+    errEl.style.display = 'block'; return false;
   }
-  const agreeCollect = document.getElementById('agreeCollect').checked;
-  const agreeThirdParty = document.getElementById('agreeThirdParty').checked;
-  const agreeNotice = document.getElementById('agreeNotice').checked;
-  if(!agreeCollect || !agreeThirdParty || !agreeNotice){
+  if(!document.getElementById('agreeCollect').checked ||
+     !document.getElementById('agreeThirdParty').checked ||
+     !document.getElementById('agreeNotice').checked){
     errEl.textContent = '필수 동의 항목에 모두 체크해 주셔야 진행할 수 있습니다.';
-    errEl.style.display = 'block';
-    return;
+    errEl.style.display = 'block'; return false;
   }
 
-  const btn = document.getElementById('btnLogin');
-  btn.disabled = true; btn.textContent = '확인 중...';
+  const btnLogin    = document.getElementById('btnLogin');
+  const btnCheck    = document.getElementById('btnCheckResv');
+  btnLogin.disabled = true; btnCheck.disabled = true;
+  btnLogin.textContent = '확인 중...';
 
   try{
     const res = await apiGet('login', { dong, ho, name, phone });
     if(!res.ok){
       errEl.textContent = res.error || '확인할 수 없습니다.';
-      errEl.style.display = 'block';
-      return;
+      errEl.style.display = 'block'; return false;
     }
     resident = res.resident;
-    enterReservationScreen();
+    enterReservationScreen(targetTab);
+    return true;
   }catch(e){
     errEl.textContent = '서버와 통신할 수 없습니다. 잠시 후 다시 시도해 주세요.';
-    errEl.style.display = 'block';
+    errEl.style.display = 'block'; return false;
   }finally{
-    btn.disabled = false; btn.textContent = '확인';
+    btnLogin.disabled = false; btnCheck.disabled = false;
+    btnLogin.textContent = '확인 (예약하기)';
   }
-});
+}
+
+document.getElementById('btnLogin').addEventListener('click', () => doLogin('reserve'));
+document.getElementById('btnCheckResv').addEventListener('click', () => doLogin('myresv'));
 
 /* ============== 예약 화면 진입 ============== */
-function enterReservationScreen(){
+function enterReservationScreen(targetTab){
   document.getElementById('loginScreen').classList.add('hidden');
   document.getElementById('reservationScreen').classList.remove('hidden');
-
   document.getElementById('groupBadge').textContent = 'G' + resident.group_no;
   document.getElementById('residentName').textContent = resident.name + '님';
   document.getElementById('residentAddr').textContent = resident.dong + '동 ' + resident.ho + '호';
-
-  refreshMyStatus();
+  switchTab(targetTab || 'reserve');
   loadCalendar(document.getElementById('monthSelect').value);
 }
 
@@ -386,46 +426,60 @@ document.getElementById('monthSelect').addEventListener('change', (e) => {
   loadCalendar(e.target.value);
 });
 
+/* ============== 탭 전환 ============== */
+function switchTab(tab){
+  const isReserve = tab === 'reserve';
+  document.getElementById('tabReserve').classList.toggle('active', isReserve);
+  document.getElementById('tabMyResv').classList.toggle('active', !isReserve);
+  document.getElementById('panelReserve').classList.toggle('hidden', !isReserve);
+  document.getElementById('panelMyResv').classList.toggle('hidden', isReserve);
+  if(!isReserve) loadMyResvPanel();
+}
+
+/* ============== 내 예약현황 패널 ============== */
+async function loadMyResvPanel(){
+  const card = document.getElementById('myResvCard');
+  card.innerHTML = '<div class="loading">불러오는 중...</div>';
+  try{
+    const res = await apiGet('myReservation', { resident_id: resident.id });
+    if(res.ok && res.reservation){
+      const r = res.reservation;
+      const d = new Date(r.date);
+      const week = ['일','월','화','수','목','금','토'][d.getDay()];
+      card.innerHTML = `
+        <div class="my-resv-badge">✓ 예약 완료</div>
+        <div class="my-resv-date">${r.date} (${week})</div>
+        <div class="my-resv-time">${r.start_time} ~ ${r.end_time}</div>
+        <div class="my-resv-meta">
+          ${resident.dong}동 ${resident.ho}호 · ${resident.name}님<br>
+          그룹 ${resident.group_no} · 입주예약
+        </div>
+        <button class="btn-cancel-full" id="btnCancelMyResv">예약 취소</button>`;
+      document.getElementById('btnCancelMyResv').addEventListener('click', () => doCancel(r.id));
+    } else {
+      card.innerHTML = `
+        <div class="my-resv-empty">
+          <div class="icon">📋</div>
+          현재 예약된 일정이 없습니다.<br>
+          <span style="font-size:12px;color:#9AA3B2;margin-top:6px;display:block;">
+            예약하기 탭에서 원하시는 날짜를 선택해 주세요.
+          </span>
+        </div>`;
+    }
+  } catch(e){
+    card.innerHTML = '<div class="my-resv-empty">예약 정보를 불러오지 못했습니다.</div>';
+  }
+}
+
 /* ============== 로그아웃 ============== */
 document.getElementById('btnLogout').addEventListener('click', () => {
   resident = null;
   document.getElementById('reservationScreen').classList.add('hidden');
   document.getElementById('loginScreen').classList.remove('hidden');
-
-  document.getElementById('inDong').value = '';
-  document.getElementById('inHo').value = '';
-  document.getElementById('inName').value = '';
-  document.getElementById('inPhone').value = '';
-  document.getElementById('agreeCollect').checked = false;
-  document.getElementById('agreeThirdParty').checked = false;
-  document.getElementById('agreeNotice').checked = false;
+  ['inDong','inHo','inName','inPhone'].forEach(id => document.getElementById(id).value = '');
+  ['agreeCollect','agreeThirdParty','agreeNotice'].forEach(id => document.getElementById(id).checked = false);
   document.getElementById('loginError').style.display = 'none';
 });
-
-/* ============== 내 예약 상태 표시 ============== */
-async function refreshMyStatus(){
-  const el = document.getElementById('statusLine');
-  el.className = 'status-line';
-  el.textContent = '예약 정보를 불러오는 중...';
-  try{
-    const res = await apiGet('myReservation', { resident_id: resident.id });
-    if(res.ok && res.reservation){
-      const r = res.reservation;
-      el.classList.add('has-resv');
-      el.innerHTML = `
-        <div class="resv-info">
-          <span class="resv-label"><span class="check">✓</span>예약 완료</span>
-          <span class="resv-time">${r.date} · ${r.start_time} ~ ${r.end_time}</span>
-        </div>
-        <button class="cancel-btn" id="cancelLink">예약취소</button>`;
-      document.getElementById('cancelLink').addEventListener('click', () => doCancel(r.id));
-    }else{
-      el.textContent = '현재 예약되어 있지 않습니다. 아래 표에서 원하시는 일정을 선택해 주세요.';
-    }
-  }catch(e){
-    el.textContent = '예약 상태를 불러오지 못했습니다.';
-  }
-}
 
 /* ============== 달력 로드 ============== */
 async function loadCalendar(month){
@@ -435,14 +489,8 @@ async function loadCalendar(month){
     const res = await apiGet('availability', {
       month, group_no: resident.group_no, resident_id: resident.id
     });
-    if(!res.ok){
-      body.innerHTML = `<div class="empty-msg">${res.error || '불러오기에 실패했습니다.'}</div>`;
-      return;
-    }
-    if(res.days.length === 0){
-      body.innerHTML = '<div class="empty-msg">해당 월에는 예약 가능한 일정이 없습니다.</div>';
-      return;
-    }
+    if(!res.ok){ body.innerHTML = `<div class="empty-msg">${res.error||'불러오기 실패'}</div>`; return; }
+    if(!res.days.length){ body.innerHTML = '<div class="empty-msg">해당 월에는 예약 가능한 일정이 없습니다.</div>'; return; }
     body.innerHTML = res.days.map(renderDayBlock).join('');
     attachSlotHandlers(res.days);
   }catch(e){
@@ -452,8 +500,7 @@ async function loadCalendar(month){
 
 function formatDayLabel(dateStr){
   const d = new Date(dateStr);
-  const week = ['일','월','화','수','목','금','토'][d.getDay()];
-  return dateStr + ' (' + week + ')';
+  return dateStr + ' (' + ['일','월','화','수','목','금','토'][d.getDay()] + ')';
 }
 
 function renderDayBlock(day){
@@ -461,20 +508,14 @@ function renderDayBlock(day){
     const label = s.status === 'MINE' ? '내 예약' : (s.start + '~' + s.end);
     return `<button class="slot-btn ${s.status}" data-date="${day.date}" data-idx="${idx}">${label}</button>`;
   }).join('');
-  return `<div class="day-block">
-    <div class="day-label">${formatDayLabel(day.date)}</div>
-    <div class="slot-grid">${slots}</div>
-  </div>`;
+  return `<div class="day-block"><div class="day-label">${formatDayLabel(day.date)}</div><div class="slot-grid">${slots}</div></div>`;
 }
 
 function attachSlotHandlers(days){
   document.querySelectorAll('.slot-btn.AVAILABLE').forEach(btn => {
     btn.addEventListener('click', () => {
-      const date = btn.dataset.date;
-      const idx = Number(btn.dataset.idx);
-      const day = days.find(d => d.date === date);
-      const slot = day.slots[idx];
-      openConfirm(date, slot);
+      const day = days.find(d => d.date === btn.dataset.date);
+      openConfirm(btn.dataset.date, day.slots[Number(btn.dataset.idx)]);
     });
   });
 }
@@ -483,16 +524,13 @@ function attachSlotHandlers(days){
 function openConfirm(date, slot){
   pendingSlot = { date, start_time: slot.start, end_time: slot.end };
   document.getElementById('confirmDetail').innerHTML =
-    `${resident.name}님께서 입주예약 하신 시간은<br>` +
-    `<b>${date} ${slot.start} 부터 ${slot.end} 까지</b> 입니다.<br><br>` +
-    `위 일정으로 예약하시겠습니까?`;
+    `${resident.name}님의 입주예약 일정<br><b>${date} ${slot.start} ~ ${slot.end}</b><br><br>위 일정으로 예약하시겠습니까?`;
   document.getElementById('confirmOverlay').classList.add('open');
 }
-document.getElementById('btnModalNo').addEventListener('click', closeConfirm);
-function closeConfirm(){
+document.getElementById('btnModalNo').addEventListener('click', () => {
   document.getElementById('confirmOverlay').classList.remove('open');
   pendingSlot = null;
-}
+});
 document.getElementById('btnModalYes').addEventListener('click', async () => {
   if(!pendingSlot) return;
   const btn = document.getElementById('btnModalYes');
@@ -502,32 +540,25 @@ document.getElementById('btnModalYes').addEventListener('click', async () => {
       resident_id: resident.id, dong: resident.dong, ho: resident.ho,
       date: pendingSlot.date, start_time: pendingSlot.start_time, end_time: pendingSlot.end_time
     });
-    if(!res.ok){
-      alert(res.error || '예약에 실패했습니다.');
-    }else{
-      closeConfirm();
-      await refreshMyStatus();
-      await loadCalendar(document.getElementById('monthSelect').value);
-      return;
-    }
+    document.getElementById('confirmOverlay').classList.remove('open');
+    pendingSlot = null;
+    if(!res.ok){ alert(res.error || '예약에 실패했습니다.'); return; }
+    await loadCalendar(document.getElementById('monthSelect').value);
+    switchTab('myresv'); // 예약 완료 후 내 예약현황 탭으로 자동 이동
   }catch(e){
     alert('서버와 통신할 수 없습니다.');
   }finally{
     btn.disabled = false; btn.textContent = '예';
   }
-  closeConfirm();
 });
 
 /* ============== 예약 취소 ============== */
 async function doCancel(reservationId){
-  if(!confirm('예약을 취소하시겠습니까?')) return;
+  if(!confirm('예약을 취소하시겠습니까?\n취소 후에는 다시 예약하셔야 합니다.')) return;
   try{
     const res = await apiPost('cancel', { resident_id: resident.id, reservation_id: reservationId });
-    if(!res.ok){
-      alert(res.error || '취소에 실패했습니다.');
-      return;
-    }
-    await refreshMyStatus();
+    if(!res.ok){ alert(res.error || '취소에 실패했습니다.'); return; }
+    await loadMyResvPanel();
     await loadCalendar(document.getElementById('monthSelect').value);
   }catch(e){
     alert('서버와 통신할 수 없습니다.');
