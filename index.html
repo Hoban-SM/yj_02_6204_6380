@@ -34,7 +34,7 @@
   }
   .topbar .eyebrow{
     margin:0 0 6px; font-size:11.5px; font-weight:700; letter-spacing:.18em; text-transform:uppercase;
-    color:#9FB4D6; opacity:1;
+    color:#9FB4D6;
   }
   .topbar h1{ margin:0; font-size:22px; font-weight:800; letter-spacing:-.02em; }
   .topbar p{ margin:6px 0 0; font-size:13.5px; opacity:.78; }
@@ -43,6 +43,7 @@
     background:var(--color-surface); border-radius:var(--radius-lg); box-shadow:var(--shadow-card);
     padding:24px; margin-bottom:16px;
   }
+
   /* ---------- 로그인 ---------- */
   .login-card h2{ font-size:17px; margin:0 0 4px; font-weight:700; }
   .login-card .sub{ font-size:13px; color:var(--color-muted); margin:0 0 22px; }
@@ -70,7 +71,7 @@
   .btn-secondary:disabled{ opacity:.55; cursor:default; }
   .error-msg{ color:#D5453B; font-size:13px; margin-top:10px; display:none; }
 
-  /* ---------- 개인정보 동의 (전체 양식) ---------- */
+  /* ---------- 개인정보 동의 ---------- */
   .consent-wrap{ margin:4px 0 16px; }
   .consent-title{
     display:flex; align-items:center; gap:8px; font-size:14px; font-weight:800; margin:18px 0 10px;
@@ -102,8 +103,15 @@
     border-radius:8px; padding:12px 14px; margin-bottom:16px;
   }
 
-  /* ---------- 예약 화면 상단 정보 ---------- */
+  /* ---------- 예약 화면 상단 ---------- */
   .info-card{ display:flex; align-items:center; gap:14px; }
+  .info-icon{
+    width:46px; height:46px; border-radius:50%; background:var(--color-primary); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0;
+  }
+  .info-main{ flex:1; min-width:0; }
+  .info-main .name{ font-size:16px; font-weight:800; }
+  .info-main .addr{ font-size:13px; color:var(--color-muted); margin-top:2px; }
 
   /* ---------- 탭 바 ---------- */
   .tab-bar{
@@ -117,7 +125,7 @@
   .tab-btn.active{ background:var(--color-primary); color:#fff; }
   .tab-btn:not(.active):hover{ background:#F1F4F9; color:var(--color-ink); }
 
-  /* ---------- 내 예약현황 카드 ---------- */
+  /* ---------- 내 예약현황 ---------- */
   .my-resv-card{ text-align:center; }
   .my-resv-empty{ padding:30px 0; color:var(--color-muted); font-size:13.5px; }
   .my-resv-empty .icon{ font-size:40px; margin-bottom:12px; }
@@ -125,12 +133,8 @@
     display:inline-flex; align-items:center; gap:6px; background:#ECFDF5; border:1px solid #BBF0D2;
     color:var(--slot-mine); font-size:12px; font-weight:800; border-radius:20px; padding:5px 12px; margin-bottom:18px;
   }
-  .my-resv-date{
-    font-size:26px; font-weight:900; color:var(--color-ink); letter-spacing:-.02em; margin-bottom:6px;
-  }
-  .my-resv-time{
-    font-size:18px; font-weight:700; color:var(--color-primary); margin-bottom:24px;
-  }
+  .my-resv-date{ font-size:26px; font-weight:900; color:var(--color-ink); letter-spacing:-.02em; margin-bottom:6px; }
+  .my-resv-time{ font-size:18px; font-weight:700; color:var(--color-primary); margin-bottom:24px; }
   .my-resv-meta{ font-size:12.5px; color:var(--color-muted); margin-bottom:20px; }
   .btn-cancel-full{
     width:100%; padding:13px; border:1.5px solid #F3B9B4; border-radius:10px; background:#fff;
@@ -143,16 +147,8 @@
     margin-bottom:16px; transition:.12s;
   }
   .btn-logout-full:hover{ background:#E0E4ED; color:var(--color-ink); }
-  .badge-group{
-    width:46px; height:46px; border-radius:50%; background:var(--color-primary); color:#fff;
-    display:flex; align-items:center; justify-content:center; font-weight:800; font-size:14px; flex-shrink:0;
-  }
-  .info-main{ flex:1; min-width:0; }
-  .info-main .name{ font-size:16px; font-weight:800; }
-  .info-main .addr{ font-size:13px; color:var(--color-muted); margin-top:2px; }
 
-
-  /* ---------- 달력 영역 ---------- */
+  /* ---------- 달력 ---------- */
   .cal-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
   .cal-head h3{ font-size:15px; margin:0; font-weight:800; }
   select{
@@ -165,7 +161,6 @@
   .dot.av{ background:var(--slot-available); }
   .dot.tk{ background:var(--slot-taken); }
   .dot.mn{ background:var(--slot-mine); }
-
   .day-block{ border-top:1px solid var(--color-line); padding:14px 0; }
   .day-block:first-child{ border-top:none; padding-top:0; }
   .day-label{ font-size:13px; font-weight:700; margin-bottom:10px; color:var(--color-ink); }
@@ -231,7 +226,6 @@
     <div class="field"><label>휴대폰 뒷자리 4자리</label><input id="inPhone" inputmode="numeric" maxlength="4" placeholder="예) 1234"></div>
 
     <div class="consent-wrap">
-
       <div class="consent-title"><span class="bar"></span>개인정보 수집·이용 동의</div>
       <table class="consent-table">
         <thead><tr><th>항목</th><th>내용</th></tr></thead>
@@ -286,9 +280,9 @@
   <!-- ===== 예약 화면 ===== -->
   <div id="reservationScreen" class="hidden">
 
-    <!-- 상단 사용자 정보 카드 -->
+    <!-- 상단 사용자 정보 -->
     <div class="card info-card">
-      <div class="badge-group" id="groupBadge">G1</div>
+      <div class="info-icon">🏠</div>
       <div class="info-main">
         <div class="name" id="residentName"></div>
         <div class="addr" id="residentAddr"></div>
@@ -347,9 +341,10 @@
 
 <script>
 /* ============== 설정 ============== */
+// ★ 배포 후 발급된 GAS 웹앱 URL을 아래에 입력하세요
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbzLtn_rr8YIHV6tSxKAWEioBXCSQC2aZr-BLbPByvABXuygy_6zZjBQzjBFQTax8bnOng/exec';
 
-let resident = null;
+let resident    = null;
 let pendingSlot = null;
 
 /* ============== API ============== */
@@ -365,7 +360,7 @@ function apiPost(action, payload){
   }).then(r => r.json());
 }
 
-/* ============== 로그인 공통 함수 ============== */
+/* ============== 로그인 ============== */
 async function doLogin(targetTab){
   const dong  = document.getElementById('inDong').value.trim();
   const ho    = document.getElementById('inHo').value.trim();
@@ -374,20 +369,18 @@ async function doLogin(targetTab){
   const errEl = document.getElementById('loginError');
   errEl.style.display = 'none';
 
-  if(!dong || !ho || !name || !phone){
-    errEl.textContent = '모든 항목을 입력해 주세요.';
-    errEl.style.display = 'block'; return false;
+  if(!dong||!ho||!name||!phone){
+    errEl.textContent='모든 항목을 입력해 주세요.'; errEl.style.display='block'; return false;
   }
   if(!document.getElementById('agreeCollect').checked ||
      !document.getElementById('agreeThirdParty').checked ||
      !document.getElementById('agreeNotice').checked){
-    errEl.textContent = '필수 동의 항목에 모두 체크해 주셔야 진행할 수 있습니다.';
-    errEl.style.display = 'block'; return false;
+    errEl.textContent='필수 동의 항목에 모두 체크해 주세요.'; errEl.style.display='block'; return false;
   }
 
-  const btnLogin    = document.getElementById('btnLogin');
-  const btnCheck    = document.getElementById('btnCheckResv');
-  btnLogin.disabled = true; btnCheck.disabled = true;
+  const btnLogin = document.getElementById('btnLogin');
+  const btnCheck = document.getElementById('btnCheckResv');
+  btnLogin.disabled = btnCheck.disabled = true;
   btnLogin.textContent = '확인 중...';
 
   try{
@@ -403,7 +396,7 @@ async function doLogin(targetTab){
     errEl.textContent = '서버와 통신할 수 없습니다. 잠시 후 다시 시도해 주세요.';
     errEl.style.display = 'block'; return false;
   }finally{
-    btnLogin.disabled = false; btnCheck.disabled = false;
+    btnLogin.disabled = btnCheck.disabled = false;
     btnLogin.textContent = '확인 (예약하기)';
   }
 }
@@ -415,16 +408,13 @@ document.getElementById('btnCheckResv').addEventListener('click', () => doLogin(
 function enterReservationScreen(targetTab){
   document.getElementById('loginScreen').classList.add('hidden');
   document.getElementById('reservationScreen').classList.remove('hidden');
-  document.getElementById('groupBadge').textContent = 'G' + resident.group_no;
   document.getElementById('residentName').textContent = resident.name + '님';
   document.getElementById('residentAddr').textContent = resident.dong + '동 ' + resident.ho + '호';
   switchTab(targetTab || 'reserve');
   loadCalendar(document.getElementById('monthSelect').value);
 }
 
-document.getElementById('monthSelect').addEventListener('change', (e) => {
-  loadCalendar(e.target.value);
-});
+document.getElementById('monthSelect').addEventListener('change', e => loadCalendar(e.target.value));
 
 /* ============== 탭 전환 ============== */
 function switchTab(tab){
@@ -436,7 +426,7 @@ function switchTab(tab){
   if(!isReserve) loadMyResvPanel();
 }
 
-/* ============== 내 예약현황 패널 ============== */
+/* ============== 내 예약현황 ============== */
 async function loadMyResvPanel(){
   const card = document.getElementById('myResvCard');
   card.innerHTML = '<div class="loading">불러오는 중...</div>';
@@ -450,10 +440,7 @@ async function loadMyResvPanel(){
         <div class="my-resv-badge">✓ 예약 완료</div>
         <div class="my-resv-date">${r.date} (${week})</div>
         <div class="my-resv-time">${r.start_time} ~ ${r.end_time}</div>
-        <div class="my-resv-meta">
-          ${resident.dong}동 ${resident.ho}호 · ${resident.name}님<br>
-          그룹 ${resident.group_no} · 입주예약
-        </div>
+        <div class="my-resv-meta">${resident.dong}동 ${resident.ho}호 · ${resident.name}님</div>
         <button class="btn-cancel-full" id="btnCancelMyResv">예약 취소</button>`;
       document.getElementById('btnCancelMyResv').addEventListener('click', () => doCancel(r.id));
     } else {
@@ -466,7 +453,7 @@ async function loadMyResvPanel(){
           </span>
         </div>`;
     }
-  } catch(e){
+  }catch(e){
     card.innerHTML = '<div class="my-resv-empty">예약 정보를 불러오지 못했습니다.</div>';
   }
 }
@@ -486,9 +473,7 @@ async function loadCalendar(month){
   const body = document.getElementById('calendarBody');
   body.innerHTML = '<div class="loading">불러오는 중...</div>';
   try{
-    const res = await apiGet('availability', {
-      month, group_no: resident.group_no, resident_id: resident.id
-    });
+    const res = await apiGet('availability', { month, resident_id: resident.id });
     if(!res.ok){ body.innerHTML = `<div class="empty-msg">${res.error||'불러오기 실패'}</div>`; return; }
     if(!res.days.length){ body.innerHTML = '<div class="empty-msg">해당 월에는 예약 가능한 일정이 없습니다.</div>'; return; }
     body.innerHTML = res.days.map(renderDayBlock).join('');
@@ -505,7 +490,7 @@ function formatDayLabel(dateStr){
 
 function renderDayBlock(day){
   const slots = day.slots.map((s, idx) => {
-    const label = s.status === 'MINE' ? '내 예약' : (s.start + '~' + s.end);
+    const label = s.status==='MINE' ? '내 예약' : (s.start+'~'+s.end);
     return `<button class="slot-btn ${s.status}" data-date="${day.date}" data-idx="${idx}">${label}</button>`;
   }).join('');
   return `<div class="day-block"><div class="day-label">${formatDayLabel(day.date)}</div><div class="slot-grid">${slots}</div></div>`;
@@ -542,9 +527,9 @@ document.getElementById('btnModalYes').addEventListener('click', async () => {
     });
     document.getElementById('confirmOverlay').classList.remove('open');
     pendingSlot = null;
-    if(!res.ok){ alert(res.error || '예약에 실패했습니다.'); return; }
+    if(!res.ok){ alert(res.error||'예약에 실패했습니다.'); return; }
     await loadCalendar(document.getElementById('monthSelect').value);
-    switchTab('myresv'); // 예약 완료 후 내 예약현황 탭으로 자동 이동
+    switchTab('myresv');
   }catch(e){
     alert('서버와 통신할 수 없습니다.');
   }finally{
@@ -557,7 +542,7 @@ async function doCancel(reservationId){
   if(!confirm('예약을 취소하시겠습니까?\n취소 후에는 다시 예약하셔야 합니다.')) return;
   try{
     const res = await apiPost('cancel', { resident_id: resident.id, reservation_id: reservationId });
-    if(!res.ok){ alert(res.error || '취소에 실패했습니다.'); return; }
+    if(!res.ok){ alert(res.error||'취소에 실패했습니다.'); return; }
     await loadMyResvPanel();
     await loadCalendar(document.getElementById('monthSelect').value);
   }catch(e){
