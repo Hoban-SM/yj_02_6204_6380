@@ -543,8 +543,8 @@ async function doCancel(reservationId){
   try{
     const res = await apiPost('cancel', { resident_id: resident.id, reservation_id: reservationId });
     if(!res.ok){ alert(res.error||'취소에 실패했습니다.'); return; }
-    await loadMyResvPanel();
     await loadCalendar(document.getElementById('monthSelect').value);
+    switchTab('reserve'); // ← 취소 완료 후 예약하기 탭으로 이동
   }catch(e){
     alert('서버와 통신할 수 없습니다.');
   }
